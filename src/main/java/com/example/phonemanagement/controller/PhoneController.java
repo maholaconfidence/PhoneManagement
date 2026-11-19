@@ -1,4 +1,4 @@
-package controller;
+package com.example.phonemanagement.controller;
 
 import com.example.phonemanagement.dto.PhoneRequest;
 import com.example.phonemanagement.dto.PhoneResponse;
@@ -19,6 +19,7 @@ public class PhoneController {
         this.phoneService = phoneService;
     }
     //CREATE
+    @PostMapping
     public ResponseEntity<PhoneResponse> createPhone(@Valid @RequestBody PhoneRequest request){
 
         PhoneResponse response = phoneService.createPhone(request);
@@ -35,12 +36,13 @@ public class PhoneController {
     //READ ONE
     @GetMapping("/{id}")
     public  ResponseEntity<PhoneResponse> getPhoneById(@PathVariable long id){
-        return  ResponseEntity.ok(phoneService.getPhoneById(id));
+        return  ResponseEntity.ok(phoneService.getPhoneById(id)
+        );
     }
     //UPDATE
     @PutMapping("/{id}")
     public  ResponseEntity<PhoneResponse> updatePhone(@PathVariable long id, @Valid @RequestBody PhoneRequest request){
-        return  ResponseEntity.ok(phoneService.updatePhone(id));
+        return  ResponseEntity.ok(phoneService.updatePhone(id, request));
     }
     //DELETE
     @DeleteMapping("/{id}")

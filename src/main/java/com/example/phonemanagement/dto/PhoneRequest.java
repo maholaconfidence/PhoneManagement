@@ -1,10 +1,7 @@
 package com.example.phonemanagement.dto;
-import jakarta.persistence.Column;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-import org.jspecify.annotations.NonNull;
+import jakarta.validation.constraints.*;
+
+import java.util.Date;
 
 
 public record PhoneRequest(
@@ -19,11 +16,13 @@ public record PhoneRequest(
 
         @NotBlank(message = "Price is required")
         @DecimalMin(value = "0.01", message = "Price must be greater then 0")
-        double price,
+        double Price,
 
-        @Min(value = 0, message = "Stock quantity cannot be negative")
-        @Column(nullable = false)
-        int stockQuantity
+        @NotNull(message = "Manufactured date must not be null")
+        @PastOrPresent(message = "Manufactured date cannot be in the future")
+         Date Manufactured
+
+
 ) {
 
 

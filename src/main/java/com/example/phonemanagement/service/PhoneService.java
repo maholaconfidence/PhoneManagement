@@ -6,9 +6,10 @@ import com.example.phonemanagement.entity.Phone;
 import com.example.phonemanagement.exceptions.ResourceNotFoundException;
 import com.example.phonemanagement.repository.PhoneRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class PhoneService {
     private final PhoneRepository phoneRepository;
     public PhoneService(PhoneRepository phoneRepository){
@@ -20,7 +21,7 @@ public class PhoneService {
         Phone phone = new Phone();
         phone.setBrand(request.Brand());
         phone.setModel(request.Model());
-        phone.setPrice(request.price());
+        phone.setPrice(request.Price());
         Phone savedPhone = phoneRepository.save(phone);
 
        return  mapToResponse(savedPhone) ;
@@ -30,26 +31,26 @@ public class PhoneService {
     @Transactional
     public List<PhoneResponse> getAllPhones(){
 
-        return PhoneRepository.findAll()
+        return phoneRepository.findAll()
                 .stream()
                 .map(this::mapToResponse)
                 .toList();
 
     }
     //READ ONE
-    public  PhoneResponse getPhoneById(long id, PhoneRequest){
+    public  PhoneResponse getPhoneById(long id){
 
         Phone phone = findPhoneOrThrow(id);
         return  mapToResponse(phone);
     }
 
     //UPDATE
-    public  PhoneResponse updatePhone(long id, PhoneRequest){
+    public  PhoneResponse updatePhone(long id, PhoneRequest request){
         Phone phone = findPhoneOrThrow(id);
 
         phone.setBrand(request.Brand());
         phone.setModel(request.Model());
-        phone.setPrice(request.price());
+        phone.setPrice(request.Price());
 
         Phone updatedPhone = phoneRepository.save(phone);
          return  mapToResponse(updatedPhone);
@@ -63,8 +64,10 @@ public class PhoneService {
 
     }
     private  Phone findPhoneOrThrow (long id){
-        return  PhoneRepository.findBy(id)
-                .orElseThrow(() -> new ResourceNotFoundException.ResourceNotFoundException(
+
+
+        return  phoneRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(
                         "Phone not found with ID: " + id
                 ));
 
