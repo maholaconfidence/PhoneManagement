@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -23,10 +25,10 @@ public class Phone {
     private  String Model;
 
     @Column(name = "Date Manufactured" , nullable = false)
-    private  String dateManufactured;
+    private Date dateManufactured;
 
     @Column(name = "Price" , nullable = false)
-    private  String Price;
+    private  double Price;
 
 }
 
