@@ -3,6 +3,7 @@ package com.example.phonemanagement.service;
 import com.example.phonemanagement.dto.PhoneRequest;
 import com.example.phonemanagement.dto.PhoneResponse;
 import com.example.phonemanagement.entity.Phone;
+import com.example.phonemanagement.exceptions.ResourceNotFoundException;
 import com.example.phonemanagement.repository.PhoneRepository;
 import jakarta.transaction.Transactional;
 
@@ -63,7 +64,7 @@ public class PhoneService {
     }
     private  Phone findPhoneOrThrow (long id){
         return  PhoneRepository.findBy(id)
-                .orElseThrow(() -> new ResourceNotFoundException(
+                .orElseThrow(() -> new ResourceNotFoundException.ResourceNotFoundException(
                         "Phone not found with ID: " + id
                 ));
 
